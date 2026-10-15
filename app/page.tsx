@@ -21,10 +21,10 @@ const models: Model[] = [
 ];
 
 const categories = [
-  { name: "Houses", sub: "Custom home models", icon: House, image: "house", tone: "sand" },
-  { name: "Apartments", sub: "Residential buildings", icon: Building2, image: "apartments", tone: "blue" },
-  { name: "Heritage", sub: "Monuments & landmarks", icon: Landmark, image: "heritage", tone: "peach" },
-  { name: "Custom Models", sub: "Your design, your model", icon: DraftingCompass, image: "villa", tone: "lilac" },
+  { name: "Houses", sub: "Custom home models", icon: House, image: "chhotakaar-Get-3D-miniature-model-of-my-home", tone: "sand" },
+  { name: "Apartments", sub: "Residential buildings", icon: Building2, image: "chhotakaar-Budget-3D-print-service-for-building-elevation", tone: "blue" },
+  { name: "Heritage", sub: "Monuments & landmarks", icon: Landmark, image: "chhotakaar-comercial-tower-3d-printed- miniature", tone: "peach" },
+  { name: "Custom Models", sub: "Your design, your model", icon: DraftingCompass, image: "chhotakaar-STL-file-3D-print-for-house-design", tone: "lilac" },
 ];
 
 function ModelArt({ kind, className = "" }: { kind: string; className?: string }) {
