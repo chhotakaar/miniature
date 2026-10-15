@@ -137,7 +137,11 @@ export default function Home() {
         <div className="hero-proof"><div className="proof-avatars"><span>3D</span><span>✳</span><span>⌂</span></div><p><strong>Made with detail.</strong><br />Designed around your vision.</p></div>
       </div>
       <div className="hero-visual">
-        <ModelArt kind="house" className="hero-art" />
+        <img
+          src="/images/chhotakaar-Architectural-miniature-model-service.png"
+          alt="Custom 3D printed miniature house by Chhotakaar"
+          className="hero-art"
+        />
         <div className="hero-note"><span className="note-line" /><span>Real designs.<br /><em>Miniature magic.</em></span><ArrowDownRight size={28} /></div>
         <div className="hero-stamp"><Sparkles size={14} /> MADE TO INSPIRE</div>
       </div>
