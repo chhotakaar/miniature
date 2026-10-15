@@ -16,7 +16,7 @@ type Model = {
 const models: Model[] = [
   { name: "Modern House", category: "Houses", size: "10–15 cm", finish: "Single colour", price: "₹799", tag: "Best seller", image: "chhotakaar-Custom-3D-model-printing-for-architecture-students", tone: "sand" },
   { name: "Apartment Building", category: "Apartments", size: "15–25 cm", finish: "Single colour", price: "₹2,499", tag: "Popular", image: "chhotakaar-Get-3D-printed-villa-building-replica", tone: "blue" },
-  { name: "Taj Mahal", category: "Heritage", size: "15–25 cm", finish: "Detailed print", price: "₹4,999", image: "heritage", tone: "peach" },
+  { name: "Taj Mahal", category: "Heritage", size: "15–25 cm", finish: "Detailed print", price: "₹4,999", image: "chhotakaar-3D-printed-scale-model-for-architects", tone: "peach" },
   { name: "Luxury Villa", category: "Houses", size: "15–25 cm", finish: "Multi colour", price: "₹3,499", image: "villa", tone: "lilac" },
 ];
 
