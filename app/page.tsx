@@ -14,7 +14,7 @@ type Model = {
 };
 
 const models: Model[] = [
-  { name: "Modern House", category: "Houses", size: "10–15 cm", finish: "Single colour", price: "₹799", tag: "Best seller", image: "house", tone: "sand" },
+  { name: "Modern House", category: "Houses", size: "10–15 cm", finish: "Single colour", price: "₹799", tag: "Best seller", image: "chhotakaar-Custom-3D-model-printing-for-architecture-students", tone: "sand" },
   { name: "Apartment Building", category: "Apartments", size: "15–25 cm", finish: "Single colour", price: "₹2,499", tag: "Popular", image: "apartments", tone: "blue" },
   { name: "Taj Mahal", category: "Heritage", size: "15–25 cm", finish: "Detailed print", price: "₹4,999", image: "heritage", tone: "peach" },
   { name: "Luxury Villa", category: "Houses", size: "15–25 cm", finish: "Multi colour", price: "₹3,499", image: "villa", tone: "lilac" },
@@ -41,6 +41,35 @@ function ModelArt({ kind, className = "" }: { kind: string; className?: string }
     <div className="tree tree-one" /><div className="tree tree-two" /><div className="tree tree-three" />
     <div className="tiny-car" />
   </div>;
+}
+
+function ModelPhoto({
+  kind,
+  alt,
+  className = "",
+  fit = "cover",
+}: {
+  kind: string;
+  alt: string;
+  className?: string;
+  fit?: "cover" | "contain";
+}) {
+  // Put your image files in /public/images using these exact names:
+  // house.webp, apartments.webp, heritage.webp, villa.webp
+  return (
+    <img
+      src={`/images/${kind}.png`}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      style={{
+        display: "block",
+        width: "100%",
+        height: "100%",
+        objectFit: fit,
+      }}
+    />
+  );
 }
 
 function EnquiryModal({ initialModel, onClose }: { initialModel: string; onClose: () => void }) {
@@ -137,11 +166,7 @@ export default function Home() {
         <div className="hero-proof"><div className="proof-avatars"><span>3D</span><span>✳</span><span>⌂</span></div><p><strong>Made with detail.</strong><br />Designed around your vision.</p></div>
       </div>
       <div className="hero-visual">
-        <img
-          src="/images/chhotakaar-Architectural-miniature-model-service.png"
-          alt="Custom 3D printed miniature house by Chhotakaar"
-          className="hero-art"
-        />
+        <ModelArt kind="house" className="hero-art" />
         <div className="hero-note"><span className="note-line" /><span>Real designs.<br /><em>Miniature magic.</em></span><ArrowDownRight size={28} /></div>
         <div className="hero-stamp"><Sparkles size={14} /> MADE TO INSPIRE</div>
       </div>
@@ -155,7 +180,7 @@ export default function Home() {
       </div>
       <div className="category-grid">
         {categories.map(({ name, sub, icon: Icon, image, tone }, i) => <button key={name} className={`category-card tone-${tone}`} onClick={() => { setActiveCategory(name); document.getElementById("models")?.scrollIntoView({ behavior: "smooth" }); }}>
-          <div className="category-image"><ModelArt kind={image} /><span className="category-number">0{i + 1}</span></div>
+          <div className="category-image"><ModelPhoto kind={image} alt={`${name} 3D printed miniature model`} /><span className="category-number">0{i + 1}</span></div>
           <div className="category-info"><span className="category-icon"><Icon size={19} /></span><div><h3>{name}</h3><p>{sub}</p></div><span className="round-arrow"><ArrowUpRight size={17} /></span></div>
         </button>)}
       </div>
@@ -171,7 +196,7 @@ export default function Home() {
       <div className="product-grid">
         {visibleModels.map(m => <article className="product-card" key={m.name}>
           <button className="product-image" onClick={() => setModal(m.name)} aria-label={`Enquire about ${m.name}`}>
-            <ModelArt kind={m.image} />
+            <ModelPhoto kind={m.image} alt={`${m.name} 3D printed miniature model`} fit="contain" />
             {m.tag && <span className="product-tag">{m.tag}</span>}
             <span className="image-quick"><ArrowUpRight size={18} /></span>
           </button>
