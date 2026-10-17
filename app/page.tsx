@@ -276,6 +276,121 @@ export default function Home() {
       <div className="view-all-row"><span>Thoughtfully made, one little world at a time.</span><button onClick={() => { setActiveCategory("All"); }}>View all models <ArrowRight size={16} /></button></div>
     </section>
 
+    <section className="finish-section" id="customize-model">
+      <style jsx>{`
+        .finish-section {
+          background: #f8f6f0;
+          color: #0b3028;
+          padding: 64px max(4%, calc((100% - 1330px) / 2)) 70px;
+        }
+        .finish-heading {
+          display: flex;
+          align-items: end;
+          justify-content: space-between;
+          gap: 28px;
+          margin-bottom: 25px;
+        }
+        .finish-eyebrow {
+          color: #bd8740;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 2px;
+          margin: 0 0 10px;
+        }
+        .finish-title {
+          color: #0b3028;
+          font-size: clamp(28px, 3vw, 40px);
+          line-height: 1.15;
+          letter-spacing: -1px;
+          margin: 0;
+        }
+        .finish-title span { color: #d2a04f; }
+        .finish-intro {
+          max-width: 360px;
+          margin: 0;
+          color: #77776e;
+          font-size: 12px;
+          line-height: 1.8;
+        }
+        .finish-track {
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: minmax(245px, 1fr);
+          gap: 14px;
+          overflow-x: auto;
+          padding: 3px 2px 14px;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: thin;
+          scrollbar-color: #d2a04f #ece7dc;
+        }
+        .finish-card {
+          min-width: 0;
+          overflow: hidden;
+          background: #fffefa;
+          border: 1px solid #e8dfd0;
+          border-radius: 13px;
+          scroll-snap-align: start;
+          transition: border-color .2s, transform .2s;
+        }
+        .finish-card:hover { border-color: #d2a04f; transform: translateY(-2px); }
+        .finish-image { position: relative; height: 185px; background: #d6b998; }
+        .finish-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .finish-number {
+          position: absolute; top: 10px; left: 9px; padding: 5px 8px;
+          border-radius: 20px; background: #f4c765; color: #18372e;
+          font-size: 9px; font-weight: 700;
+        }
+        .finish-content { padding: 14px 13px 15px; }
+        .finish-tagline { color: #bd8740; font-size: 9px; line-height: 1.5; margin: 0 0 7px; }
+        .finish-card h3 { color: #0b3028; font-size: 16px; line-height: 1.3; margin: 0 0 8px; }
+        .finish-description { min-height: 42px; color: #77776e; font-size: 10px; line-height: 1.7; margin: 0 0 14px; }
+        .finish-included { color: #18372e; font-size: 9px; font-weight: 700; letter-spacing: .8px; margin: 0 0 9px; }
+        .finish-features { list-style: none; padding: 0; margin: 0 0 16px; }
+        .finish-features li { color: #77776e; font-size: 10px; line-height: 1.5; margin: 6px 0; }
+        .finish-features li::before { content: '✓'; color: #d2a04f; font-weight: 700; margin-right: 7px; }
+        .finish-button {
+          display: flex; align-items: center; justify-content: space-between; gap: 8px;
+          width: 100%; box-sizing: border-box; border: 0; border-radius: 24px;
+          padding: 11px 12px; background: #0b382e; color: white;
+          font-size: 10px; font-weight: 700; cursor: pointer;
+        }
+        .finish-button:hover { background: #155243; }
+        @media (max-width: 800px) {
+          .finish-section { padding: 48px 4%; }
+          .finish-heading { align-items: start; flex-direction: column; gap: 12px; }
+          .finish-track { grid-auto-columns: minmax(250px, 72vw); }
+          .finish-image { height: 210px; }
+        }
+        @media (max-width: 480px) {
+          .finish-track { grid-auto-columns: minmax(245px, 84vw); }
+        }
+      `}</style>
+      <div className="finish-heading">
+        <div><p className="finish-eyebrow">THE MINIATURE EDIT</p><h2 className="finish-title">Choose your finish<span>.</span></h2></div>
+        <p className="finish-intro">Har option aapke apartment model ko aur personal banane ke liye hai. Cards ko horizontally scroll karke details dekhein.</p>
+      </div>
+      <div className="finish-track">
+        {[
+          { number: '01 / 04', name: 'Basic Apartment Model', tagline: 'Simple. Detailed. Timeless.', image: '/images/chhotakaar-only-3d-printed-apartment.png', description: 'A clean, detailed miniature of your apartment design.', features: ['Detailed apartment facade', 'Balconies and windows', '3D-printed structure', 'Simple display base'] },
+          { number: '02 / 04', name: 'Apartment with Lighting', tagline: 'A little light. A big difference.', image: '/images/chhotakaar-3d-printed-apartment-with-lighting.png', description: 'Add warm lighting to make your miniature stand out.', features: ['Everything in the basic model', 'Warm LED lighting', 'Illuminated windows', 'Striking display look'] },
+          { number: '03 / 04', name: 'Apartment with Landscape', tagline: 'Bring the outdoors in.', image: '/images/chhotakaar-3d-printed-apartment-with-landscape.png', description: 'Surround your building with miniature greenery and landscape details.', features: ['Apartment miniature', 'Miniature greenery', 'Landscape details', 'Decorative ground base'] },
+          { number: '04 / 04', name: 'Apartment with Acrylic Cover', tagline: 'Made to display. Made to protect.', image: '/images/chhotakaar-3d-printed-apartment-with-acrylic-covering-box.png', description: 'Showcase your miniature inside a transparent acrylic cover.', features: ['Architectural miniature', 'Transparent acrylic cover', 'Helps keep dust away', 'Clean display finish'] },
+        ].map((item) => (
+          <article className="finish-card" key={item.number}>
+            <div className="finish-image"><img src={item.image} alt={`${item.name} by Chhotakaar`} loading="lazy" /><span className="finish-number">{item.number}</span></div>
+            <div className="finish-content">
+              <p className="finish-tagline">{item.tagline}</p>
+              <h3>{item.name}</h3>
+              <p className="finish-description">{item.description}</p>
+              <p className="finish-included">WHAT'S INCLUDED</p>
+              <ul className="finish-features">{item.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
+              <button className="finish-button" onClick={() => setModal(item.name)}>Enquire about this model <ArrowUpRight size={14} /></button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
     <section className="benefits-strip" id="process">
       <div className="benefits-inner">
         <div className="benefit"><span className="benefit-icon"><ShieldCheck /></span><div><h3>Made with care</h3><p>Precision 3D printing<br />with thoughtful detailing.</p></div></div>
