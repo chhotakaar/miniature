@@ -6,86 +6,81 @@ import { useState } from "react";
 const models = [
   {
     number: "01",
-    name: "Basic Model",
-    subtitle: "The Essential Edition",
-    image: "/images/apartment-basic.webp",
-    price: "₹1,499",
-    description: "A clean and detailed 3D-printed apartment miniature.",
+    name: "Basic Apartment Model",
+    subtitle: "Simple. Detailed. Timeless.",
+    image: "/chhotakaar-only-3d-printed-apartment.png",
+    price: "Basic finish",
+    description:
+      "A modern 3D-printed apartment miniature with a clean, detailed architectural finish.",
     features: [
-      "4-storey apartment design",
-      "White and light grey facade",
+      "Modern 4-storey apartment design",
       "Detailed balconies and windows",
-      "Plain display base",
+      "White and grey exterior",
+      "Simple display base",
     ],
   },
   {
     number: "02",
-    name: "LED Lights",
-    subtitle: "Light Up Your Model",
-    image: "/images/apartment-lights.webp",
-    price: "₹2,499",
-    description: "Add warm lighting to bring your miniature to life.",
+    name: "Apartment with Lighting",
+    subtitle: "Bring Your Model to Life",
+    image: "/chhotakaar-3d-printed-apartment-with-lighting.png",
+    price: "Lighting upgrade",
+    description:
+      "Enhance your apartment model with warm lighting for an eye-catching display.",
     features: [
-      "Everything in Basic Model",
+      "Apartment miniature",
       "Warm LED lighting",
       "Illuminated windows",
-      "Premium evening appearance",
+      "Beautiful display appearance",
     ],
   },
   {
     number: "03",
-    name: "Landscape Edition",
-    subtitle: "Bring the Outdoors In",
-    image: "/images/apartment-landscape.webp",
-    price: "₹3,499",
-    description: "Add miniature greenery and landscaping around your building.",
+    name: "Apartment with Landscape",
+    subtitle: "A Little World of Its Own",
+    image: "/chhotakaar-3d-printed-apartment-with-landscape.png",
+    price: "Landscape upgrade",
+    description:
+      "Add greenery and miniature landscaping to create a more complete architectural scene.",
     features: [
-      "Everything in LED Lights",
-      "Miniature trees and greenery",
-      "Landscaped ground base",
-      "Decorative pathways",
+      "Detailed apartment model",
+      "Miniature greenery",
+      "Landscape detailing",
+      "Decorative ground base",
     ],
   },
   {
     number: "04",
-    name: "Acrylic Display",
-    subtitle: "Protect and Display",
-    image: "/images/apartment-acrylic.webp",
-    price: "₹4,999",
-    description: "Showcase your model inside a transparent display case.",
+    name: "Apartment with Acrylic Cover",
+    subtitle: "Protect. Preserve. Display.",
+    image:
+      "/chhotakaar-3d-printed-apartment-with-acrylic-covering-box.png",
+    price: "Acrylic cover upgrade",
+    description:
+      "Present your miniature inside a transparent acrylic display cover.",
     features: [
-      "Everything in Landscape Edition",
-      "Transparent acrylic cover",
-      "Protection from dust",
-      "Elegant display finish",
-    ],
-  },
-  {
-    number: "05",
-    name: "Signature Edition",
-    subtitle: "The Complete Experience",
-    image: "/images/apartment-signature.webp",
-    price: "₹6,999",
-    description: "A premium miniature with a personalized finishing touch.",
-    features: [
-      "LED lights and landscaping",
-      "Transparent acrylic cover",
-      "Premium display base",
-      "Custom nameplate",
+      "Architectural apartment model",
+      "Transparent acrylic covering",
+      "Helps protect against dust",
+      "Premium display finish",
     ],
   },
 ];
 
 export default function CustomizeYourModelPage() {
-  const [activeModel, setActiveModel] = useState("01");
+  const [selected, setSelected] = useState("01");
+
+  const selectedModel = models.find(
+    (model) => model.number === selected
+  );
 
   return (
     <main className="customize-page">
       <style jsx>{`
         .customize-page {
-          background: #faf8f4;
-          color: #26241f;
           min-height: 100vh;
+          background: #faf8f4;
+          color: #292720;
           padding: 32px 0 70px;
         }
 
@@ -95,13 +90,14 @@ export default function CustomizeYourModelPage() {
         }
 
         .back-link {
-          color: #635847;
-          text-decoration: none;
+          display: inline-block;
+          color: #625745;
           font-size: 14px;
+          text-decoration: none;
         }
 
         .eyebrow {
-          color: #9b7c50;
+          color: #98794e;
           font-size: 11px;
           font-weight: 700;
           letter-spacing: 2px;
@@ -116,19 +112,19 @@ export default function CustomizeYourModelPage() {
         }
 
         .intro {
-          max-width: 680px;
-          color: #706b63;
-          line-height: 1.8;
+          max-width: 700px;
+          color: #716b62;
           font-size: 15px;
+          line-height: 1.9;
           margin-top: 18px;
         }
 
         .section-heading {
           display: flex;
-          align-items: end;
           justify-content: space-between;
+          align-items: end;
           gap: 20px;
-          margin: 55px 0 22px;
+          margin: 52px 0 22px;
         }
 
         .section-heading .eyebrow {
@@ -137,8 +133,8 @@ export default function CustomizeYourModelPage() {
 
         h2 {
           font-size: clamp(25px, 3vw, 36px);
-          margin: 0;
           letter-spacing: -0.7px;
+          margin: 0;
         }
 
         .scroll-hint {
@@ -156,18 +152,17 @@ export default function CustomizeYourModelPage() {
           padding: 5px 3px 22px;
           scroll-snap-type: x mandatory;
           scrollbar-width: thin;
-          scrollbar-color: #c5b59d #eee7dc;
         }
 
         .model-card {
           min-width: 0;
-          background: white;
+          background: #fff;
           border: 1px solid #e8e1d7;
           border-radius: 14px;
           overflow: hidden;
           scroll-snap-align: start;
-          transition: border-color 0.2s, transform 0.2s;
           cursor: pointer;
+          transition: transform 0.2s, border-color 0.2s;
         }
 
         .model-card:hover,
@@ -178,16 +173,16 @@ export default function CustomizeYourModelPage() {
 
         .image-wrap {
           position: relative;
-          height: 245px;
+          height: 250px;
           background: #eee7dc;
           overflow: hidden;
         }
 
         .model-image {
+          display: block;
           width: 100%;
           height: 100%;
           object-fit: cover;
-          display: block;
           transition: transform 0.3s;
         }
 
@@ -200,9 +195,8 @@ export default function CustomizeYourModelPage() {
           top: 12px;
           left: 12px;
           background: white;
-          color: #302b24;
-          border-radius: 5px;
           padding: 7px 10px;
+          border-radius: 5px;
           font-size: 12px;
           font-weight: 700;
         }
@@ -212,98 +206,99 @@ export default function CustomizeYourModelPage() {
         }
 
         .subtitle {
-          color: #9b7c50;
+          color: #98794e;
           font-size: 11px;
           letter-spacing: 0.5px;
-          margin: 0 0 8px;
+          margin: 0 0 9px;
         }
 
         h3 {
-          font-size: 22px;
+          font-size: 21px;
+          line-height: 1.35;
           margin: 0;
         }
 
         .description {
-          color: #706b63;
+          color: #716b62;
           font-size: 13px;
-          line-height: 1.7;
-          min-height: 44px;
+          line-height: 1.8;
+          min-height: 70px;
         }
 
-        .price {
-          font-size: 25px;
-          font-weight: 700;
-          margin: 15px 0;
-        }
-
-        .price span {
-          font-size: 11px;
-          font-weight: 400;
-          color: #81786a;
+        .price-label {
+          display: inline-block;
+          padding: 8px 10px;
+          background: #f3eee6;
+          color: #6b5638;
+          border-radius: 5px;
+          font-size: 12px;
+          font-weight: 600;
+          margin: 5px 0 12px;
         }
 
         .feature-title {
           font-size: 12px;
           font-weight: 700;
-          margin-top: 20px;
+          margin: 15px 0 10px;
         }
 
         .features {
           list-style: none;
           padding: 0;
-          margin: 10px 0 22px;
+          margin: 0 0 22px;
         }
 
         .features li {
           font-size: 13px;
-          color: #625e57;
           line-height: 1.7;
-          margin: 5px 0;
+          color: #625e57;
+          margin: 6px 0;
         }
 
         .features li::before {
           content: "✓";
-          color: #9b7c50;
+          color: #98794e;
           font-weight: 700;
           margin-right: 9px;
         }
 
         .enquire-button {
           display: flex;
-          align-items: center;
           justify-content: space-between;
+          align-items: center;
           gap: 10px;
-          width: 100%;
-          box-sizing: border-box;
-          padding: 13px 15px;
+          padding: 13px 14px;
           background: #292720;
           color: white;
           border-radius: 6px;
           text-decoration: none;
-          font-size: 13px;
-          transition: background 0.2s;
+          font-size: 12px;
         }
 
         .enquire-button:hover {
           background: #6c573c;
         }
 
-        .selected-note {
+        .selected-panel {
           margin-top: 28px;
+          padding: 25px;
           background: #eee7dc;
           border-radius: 12px;
-          padding: 24px;
         }
 
-        .selected-note p {
-          color: #706b63;
+        .selected-panel .eyebrow {
+          margin-top: 0;
+        }
+
+        .selected-panel p:last-child {
+          color: #716b62;
           line-height: 1.8;
           margin-bottom: 0;
         }
 
         .bottom-section {
-          margin-top: 55px;
-          padding: 38px;
+          margin-top: 48px;
+          padding: 36px;
           background: #eee7dc;
           border-radius: 14px;
         }
@@ -313,18 +308,18 @@ export default function CustomizeYourModelPage() {
         }
 
         .bottom-section p:not(.eyebrow) {
-          color: #706b63;
-          line-height: 1.8;
           max-width: 650px;
+          color: #716b62;
+          line-height: 1.8;
         }
 
         .bottom-link {
           display: inline-block;
           margin-top: 10px;
           padding: 13px 18px;
-          border-radius: 6px;
           background: #292720;
           color: white;
+          border-radius: 6px;
           text-decoration: none;
           font-size: 13px;
         }
@@ -338,7 +333,7 @@ export default function CustomizeYourModelPage() {
             align-items: start;
             flex-direction: column;
             gap: 8px;
-            margin-top: 40px;
+            margin-top: 38px;
           }
 
           .model-track {
@@ -369,10 +364,10 @@ export default function CustomizeYourModelPage() {
           <h1>Customize Your Model</h1>
 
           <p className="intro">
-            Start with a basic 3D-printed apartment and make it yours.
-            Add LED lights, beautiful landscaping, an acrylic display
-            case, and a personalized nameplate to create your ideal
-            miniature.
+            Start with a basic 3D-printed apartment and make it
+            your own. Explore lighting, landscaping and acrylic
+            display options to find the finish that suits your
+            style and budget.
           </p>
         </header>
 
@@ -380,8 +375,9 @@ export default function CustomizeYourModelPage() {
           <div className="section-heading">
             <div>
               <p className="eyebrow">YOUR MODEL, YOUR CHOICE</p>
-              <h2>Choose Your Edition</h2>
+              <h2>Explore the Options</h2>
             </div>
+
             <p className="scroll-hint">
               ← Scroll horizontally to explore →
             </p>
@@ -392,14 +388,14 @@ export default function CustomizeYourModelPage() {
               <article
                 key={model.number}
                 className={`model-card ${
-                  activeModel === model.number ? "selected" : ""
+                  selected === model.number ? "selected" : ""
                 }`}
-                onClick={() => setActiveModel(model.number)}
+                onClick={() => setSelected(model.number)}
               >
                 <div className="image-wrap">
                   <img
                     src={model.image}
-                    alt={`${model.name} - 3D printed apartment miniature by Chhotakaar`}
+                    alt={`${model.name} | Chhotakaar 3D printed apartment miniature`}
                     className="model-image"
                     loading={model.number === "01" ? "eager" : "lazy"}
                   />
@@ -410,14 +406,15 @@ export default function CustomizeYourModelPage() {
                   <p className="subtitle">{model.subtitle}</p>
                   <h3>{model.name}</h3>
 
-                  <p className="description">{model.description}</p>
-
-                  <p className="price">
-                    {model.price}
-                    <span> onwards</span>
+                  <p className="description">
+                    {model.description}
                   </p>
 
-                  <p className="feature-title">What's included</p>
+                  <span className="price-label">
+                    {model.price}
+                  </span>
+
+                  <p className="feature-title">Features</p>
 
                   <ul className="features">
                     {model.features.map((feature) => (
@@ -438,23 +435,21 @@ export default function CustomizeYourModelPage() {
           </div>
         </section>
 
-        <section className="selected-note">
-          <p className="eyebrow">MAKE IT YOURS</p>
-          <h2>
-            {models.find((model) => model.number === activeModel)?.name}
-          </h2>
-          <p>
-            {models.find((model) => model.number === activeModel)?.description}
-            {" "}Choose an edition and contact us to discuss your requirements.
-          </p>
-        </section>
+        {selectedModel && (
+          <section className="selected-panel">
+            <p className="eyebrow">YOUR SELECTED OPTION</p>
+            <h2>{selectedModel.name}</h2>
+            <p>{selectedModel.description}</p>
+          </section>
+        )}
 
         <section className="bottom-section">
           <p className="eyebrow">MADE FOR YOUR SPACE</p>
-          <h2>A miniature that tells your story.</h2>
+          <h2>Have a custom design in mind?</h2>
           <p>
-            Have a specific building design, size, or finish in mind?
-            Talk to us about a custom architectural miniature made for you.
+            Tell us about your building, preferred size and
+            finishing requirements. We can discuss a miniature
+            designed around your idea.
           </p>
           <a href="/contact" className="bottom-link">
             Discuss Your Model →
