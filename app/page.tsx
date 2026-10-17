@@ -169,6 +169,7 @@ export default function Home() {
       <nav className={menuOpen ? "nav-links nav-open" : "nav-links"}>
         <a className="active" href="#home" onClick={() => setMenuOpen(false)}>Home</a>
         <a href="#models" onClick={() => setMenuOpen(false)}>Models</a>
+        <a href="/customize-your-model" onClick={() => setMenuOpen(false)}>Customize Your Model</a>
         <a href="#process" onClick={() => setMenuOpen(false)}>How it works</a>
         <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
         <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
@@ -298,7 +299,7 @@ export default function Home() {
     <footer className="site-footer">
       <div className="footer-main">
         <a className="brand footer-brand" href="#home"><span className="brand-mark"><House size={25} /></span><span><strong>CHHOTAKAAR</strong><small>Architectural Miniatures · 3D Printing</small></span></a>
-        <div className="footer-nav"><a href="#home">Home</a><a href="#models">Models</a><a href="#process">How it works</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+        <div className="footer-nav"><a href="#home">Home</a><a href="#models">Models</a><a href="/customize-your-model">Customize Your Model</a><a href="#process">How it works</a><a href="#about">About</a><a href="#contact">Contact</a></div>
         <div className="socials"><a href="https://instagram.com" aria-label="Instagram"><Instagram size={17} /></a><a href="https://wa.me/" aria-label="WhatsApp"><MessageCircle size={17} /></a><a href="https://youtube.com" aria-label="YouTube"><Youtube size={17} /></a><button className="footer-login" onClick={() => setModal("Customer Login")}><UserRound size={14} /> Login</button></div>
       </div>
       <div className="footer-bottom"><span>© {new Date().getFullYear()} Chhotakaar. All rights reserved.</span><span><i /> Bade Sapne. Chhota Akaar.</span></div>
