@@ -8,7 +8,7 @@ const models = [
     number: "01",
     name: "Basic Apartment Model",
     subtitle: "Simple. Detailed. Timeless.",
-    image: "/chhotakaar-only-3d-printed-apartment.png",
+    image: "/images/chhotakaar-only-3d-printed-apartment.png",
     price: "Basic finish",
     description:
       "A modern 3D-printed apartment miniature with a clean, detailed architectural finish.",
@@ -23,7 +23,7 @@ const models = [
     number: "02",
     name: "Apartment with Lighting",
     subtitle: "Bring Your Model to Life",
-    image: "/chhotakaar-3d-printed-apartment-with-lighting.png",
+    image: "/images/chhotakaar-3d-printed-apartment-with-lighting.png",
     price: "Lighting upgrade",
     description:
       "Enhance your apartment model with warm lighting for an eye-catching display.",
@@ -38,7 +38,7 @@ const models = [
     number: "03",
     name: "Apartment with Landscape",
     subtitle: "A Little World of Its Own",
-    image: "/chhotakaar-3d-printed-apartment-with-landscape.png",
+    image: "/images/chhotakaar-3d-printed-apartment-with-landscape.png",
     price: "Landscape upgrade",
     description:
       "Add greenery and miniature landscaping to create a more complete architectural scene.",
@@ -54,7 +54,7 @@ const models = [
     name: "Apartment with Acrylic Cover",
     subtitle: "Protect. Preserve. Display.",
     image:
-      "/chhotakaar-3d-printed-apartment-with-acrylic-covering-box.png",
+      "/images/chhotakaar-3d-printed-apartment-with-acrylic-covering-box.png",
     price: "Acrylic cover upgrade",
     description:
       "Present your miniature inside a transparent acrylic display cover.",
