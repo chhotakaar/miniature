@@ -131,12 +131,19 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeSlide, setActiveSlide] = useState(0);
 
-  // Use the same first images that appear in "Explore by model type".
-  const heroSlides = categories.map((category) => ({
-    image: `/images/${category.image}.png`,
-    alt: `${category.name} - ${category.sub} | Chhotakaar`,
-    name: category.name,
-  }));
+  // Homepage slider: category images first, followed by all "Popular miniature models" images.
+  const heroSlides = [
+    ...categories.map((category) => ({
+      image: `/images/${category.image}.png`,
+      alt: `${category.name} - ${category.sub} | Chhotakaar`,
+      name: `Category: ${category.name}`,
+    })),
+    ...models.map((model) => ({
+      image: `/images/${model.image}.png`,
+      alt: `${model.name} 3D printed miniature model | Chhotakaar`,
+      name: `Model: ${model.name}`,
+    })),
+  ];
 
   useEffect(() => {
     if (heroSlides.length < 2) return;
@@ -146,7 +153,7 @@ export default function Home() {
     }, 4000);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [heroSlides.length]);
 
   const visibleModels = activeCategory === "All" || activeCategory === "Custom Models"
     ? models
