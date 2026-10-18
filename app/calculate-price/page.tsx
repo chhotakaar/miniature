@@ -24,6 +24,8 @@ export default function CalculatePricePage() {
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [notes, setNotes] = useState("");
+  const [savingLead, setSavingLead] = useState(false);
+  const [leadError, setLeadError] = useState("");
 
   const area = Math.max(1, length) * Math.max(1, width);
 
@@ -77,6 +79,51 @@ export default function CalculatePricePage() {
   const whatsappUrl =
     "https://wa.me/91XXXXXXXXXX?text=" +
     encodeURIComponent(whatsappMessage);
+
+  async function handleGetQuote() {
+    if (savingLead) return;
+    setSavingLead(true);
+    setLeadError("");
+
+    const lead = {
+      customerName,
+      phone: customerPhone,
+      email: customerEmail,
+      modelType,
+      length,
+      width,
+      detailLevel: detail,
+      has3DFile: has3DFile === "yes" ? "Yes" : "No",
+      lighting: led ? "Yes" : "No",
+      landscaping: landscape ? "Yes" : "No",
+      acrylicBox: acrylic ? "Yes" : "No",
+      painting: painting ? "Yes" : "No",
+      estimatedPrice: total,
+      notes,
+    };
+
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(lead),
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Could not save your enquiry.");
+      }
+
+      window.location.href = whatsappUrl;
+    } catch (error) {
+      setLeadError(
+        error instanceof Error
+          ? `Your enquiry could not be saved to our sheet. Please try again. (${error.message})`
+          : "Your enquiry could not be saved. Please try again."
+      );
+      setSavingLead(false);
+    }
+  }
 
   const fieldStyle = {
     width: "100%",
@@ -569,25 +616,32 @@ export default function CalculatePricePage() {
               </p>
             </div>
 
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={handleGetQuote}
+              disabled={savingLead}
               style={{
                 display: "block",
+                width: "100%",
                 marginTop: 23,
                 padding: "14px 16px",
+                border: "none",
                 borderRadius: 11,
-                background: "#d7e8cf",
+                background: savingLead ? "#b7c9b0" : "#d7e8cf",
                 color: "#213e2b",
                 textAlign: "center",
-                textDecoration: "none",
                 fontWeight: 800,
                 fontSize: 14,
+                cursor: savingLead ? "wait" : "pointer",
               }}
             >
-              Get Quote on WhatsApp →
-            </a>
+              {savingLead ? "Saving enquiry..." : "Get Quote on WhatsApp →"}
+            </button>
+            {leadError && (
+              <p role="alert" style={{ color: "#ffd8d8", fontSize: 12, lineHeight: 1.6 }}>
+                {leadError}
+              </p>
+            )}
             <p
               style={{
                 textAlign: "center",
