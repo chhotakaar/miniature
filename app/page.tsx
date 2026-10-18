@@ -185,6 +185,7 @@ export default function Home() {
         <a href="/blog" onClick={() => setMenuOpen(false)}>Blog</a>
         <a href="/about" onClick={() => setMenuOpen(false)}>About</a>
         <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+        <a href="/calculate-price" onClick={() => setMenuOpen(false)}>Calculate Price</a>
       </nav>
       <div className="header-actions">
         <button className="icon-button search-button" aria-label="Search models" onClick={() => document.getElementById("models")?.scrollIntoView({ behavior: "smooth" })}><CircleHelp size={19} /></button>
