@@ -22,6 +22,7 @@ export default function CalculatePricePage() {
   const [painting, setPainting] = useState(false);
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
   const [notes, setNotes] = useState("");
 
   const area = Math.max(1, length) * Math.max(1, width);
@@ -67,6 +68,7 @@ export default function CalculatePricePage() {
     `Estimated total: ${money(total)}`,
     `Name: ${customerName || "Not provided"}`,
     `Phone: ${customerPhone || "Not provided"}`,
+    `Email: ${customerEmail || "Not provided"}`,
     `Requirements: ${notes || "None"}`,
     "",
     "Please confirm the final price and delivery time.",
@@ -457,6 +459,17 @@ export default function CalculatePricePage() {
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
                     placeholder="Your contact number"
+                  />
+                </label>
+                <label>
+                  <span style={labelStyle}>Email address</span>
+                  <input
+                    style={fieldStyle}
+                    type="email"
+                    value={customerEmail}
+                    onChange={(e) => setCustomerEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    autoComplete="email"
                   />
                 </label>
                 <label>
