@@ -3,6 +3,20 @@
 
 import { useState } from "react";
 
+const colors = {
+  ink: "#18352d",
+  green: "#246b50",
+  cream: "#f8f7f2",
+  border: "#e6e8e2",
+  muted: "#68736d",
+};
+
+const rates: Record<string, number> = {
+  Basic: 90,
+  Detailed: 160,
+  Premium: 260,
+};
+
 export default function CalculatePricePage() {
   const [model, setModel] = useState("Villa");
   const [length, setLength] = useState(8);
@@ -14,15 +28,9 @@ export default function CalculatePricePage() {
   const [paint, setPaint] = useState(true);
   const [custom, setCustom] = useState(false);
 
-  // Demonstration rates: production cost validate karne ke baad badlein.
-  const rates: Record<string, number> = {
-    Basic: 90,
-    Detailed: 160,
-    Premium: 260,
-  };
-
   const area = length * width;
   const base = Math.max(999, area * rates[detail]);
+
   const extras =
     (lighting ? 800 : 0) +
     (landscape ? Math.max(500, area * 20) : 0) +
@@ -30,70 +38,210 @@ export default function CalculatePricePage() {
     (paint ? 500 : 0) +
     (custom ? 1500 : 0);
 
-  const total = Math.round(base + extras);
+  const total = base + extras;
+
   const money = (n: number) =>
-    "₹" + n.toLocaleString("en-IN");
+    "₹" + Math.round(n).toLocaleString("en-IN");
+
+  const card: React.CSSProperties = {
+    background: "#fff",
+    border: `1px solid ${colors.border}`,
+    borderRadius: 18,
+    padding: 24,
+    minWidth: 0,
+    boxSizing: "border-box",
+  };
+
+  const label: React.CSSProperties = {
+    display: "block",
+    fontSize: 14,
+    fontWeight: 600,
+    marginBottom: 8,
+    color: colors.ink,
+  };
+
+  const input: React.CSSProperties = {
+    width: "100%",
+    padding: "12px 13px",
+    border: `1px solid ${colors.border}`,
+    borderRadius: 9,
+    background: "#fff",
+    color: colors.ink,
+    fontSize: 15,
+    boxSizing: "border-box",
+  };
+
+  const option: React.CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    padding: 14,
+    border: `1px solid ${colors.border}`,
+    borderRadius: 12,
+    cursor: "pointer",
+    background: "#fff",
+    minWidth: 0,
+  };
 
   function requestQuote() {
-    // Apna WhatsApp number country code ke saath enter karein.
-    const WHATSAPP_NUMBER = "919560672813";
+    const number = "91XXXXXXXXXX";
+
+    if (number.includes("X")) {
+      alert("Please add your WhatsApp business number in the code.");
+      return;
+    }
 
     const message = [
       "Hello Chhotakaar! I want a miniature model quote.",
       `Model: ${model}`,
       `Size: ${length} x ${width} inches`,
-      `Area: ${area} sq. in.`,
-      `Detail: ${detail}`,
+      `Base area: ${area} sq. in.`,
+      `Detailing: ${detail}`,
       `LED lighting: ${lighting ? "Yes" : "No"}`,
       `Landscaping: ${landscape ? "Yes" : "No"}`,
       `Acrylic box: ${acrylic ? "Yes" : "No"}`,
       `Paint finishing: ${paint ? "Yes" : "No"}`,
       `Custom design: ${custom ? "Yes" : "No"}`,
       `Estimated price: ${money(total)}`,
-      "Please confirm the final price and delivery time.",
+      "Please confirm final pricing and delivery time.",
     ].join("\n");
 
     window.open(
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      `https://wa.me/${number}?text=${encodeURIComponent(message)}`,
       "_blank"
     );
   }
 
-  const inputClass =
-    "w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900";
-
-  const cardClass =
-    "rounded-2xl border border-gray-200 bg-white p-5 shadow-sm";
+  function checkOption(
+    title: string,
+    description: string,
+    price: string,
+    checked: boolean,
+    onChange: (value: boolean) => void
+  ) {
+    return (
+      <label
+        key={title}
+        style={{
+          ...option,
+          alignItems: "flex-start",
+          background: checked ? "#f0f7f1" : "#fff",
+          borderColor: checked ? "#a9cdb4" : colors.border,
+        }}
+      >
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+          style={{
+            width: 18,
+            height: 18,
+            accentColor: colors.green,
+            flexShrink: 0,
+            marginTop: 3,
+          }}
+        />
+        <span style={{ flex: 1, minWidth: 0 }}>
+          <span style={{ display: "block", fontWeight: 600 }}>
+            {title}
+          </span>
+          <span
+            style={{
+              display: "block",
+              fontSize: 13,
+              color: colors.muted,
+              marginTop: 4,
+              lineHeight: 1.5,
+            }}
+          >
+            {description}
+          </span>
+        </span>
+        <span
+          style={{
+            fontSize: 13,
+            fontWeight: 600,
+            whiteSpace: "nowrap",
+            color: colors.green,
+          }}
+        >
+          {price}
+        </span>
+      </label>
+    );
+  }
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-10 text-gray-900 sm:py-14">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-8 text-center">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-gray-500">
-            CHHOTAKAAR CUSTOM MODELS
-          </p>
-          <h1 className="text-3xl font-bold sm:text-4xl">
+    <main
+      style={{
+        background: colors.cream,
+        minHeight: "100vh",
+        padding: "44px 18px 70px",
+        color: colors.ink,
+        fontFamily: "Arial, Helvetica, sans-serif",
+        boxSizing: "border-box",
+      }}
+    >
+      <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+        <header style={{ textAlign: "center", marginBottom: 36 }}>
+          <div
+            style={{
+              fontSize: 12,
+              letterSpacing: 3,
+              fontWeight: 700,
+              color: colors.green,
+              marginBottom: 14,
+            }}
+          >
+            CHHOTAKAAR · CUSTOM ARCHITECTURAL MODELS
+          </div>
+
+          <h1
+            style={{
+              fontSize: "clamp(32px, 5vw, 50px)",
+              letterSpacing: -1.5,
+              lineHeight: 1.12,
+              margin: "0 0 15px",
+              fontWeight: 750,
+              color: colors.ink,
+            }}
+          >
             Build Your Own Miniature
           </h1>
-          <p className="mx-auto mt-3 max-w-xl text-gray-600">
-            Choose your model size, detailing and features
-            to get an estimated price.
-          </p>
-        </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <section className={cardClass}>
-            <h2 className="mb-5 text-xl font-semibold">
-              1. Choose your model
+          <p
+            style={{
+              maxWidth: 570,
+              margin: "0 auto",
+              lineHeight: 1.8,
+              color: colors.muted,
+              fontSize: 16,
+            }}
+          >
+            Create your dream miniature. Choose the size,
+            detailing and finishing to estimate your price.
+          </p>
+        </header>
+
+        <div
+          className="calculator-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+            gap: 22,
+            alignItems: "start",
+          }}
+        >
+          <section style={card}>
+            <h2 style={{ fontSize: 21, margin: "0 0 22px" }}>
+              01. Choose your model
             </h2>
 
-            <label className="mb-2 block text-sm font-medium">
-              Model type
-            </label>
+            <label style={label}>Model type</label>
             <select
-              className={inputClass}
               value={model}
               onChange={(e) => setModel(e.target.value)}
+              style={input}
             >
               <option>House</option>
               <option>Villa</option>
@@ -101,173 +249,313 @@ export default function CalculatePricePage() {
               <option>Commercial Building</option>
             </select>
 
-            <h2 className="mb-4 mt-6 text-xl font-semibold">
-              2. Model base size
+            <h2 style={{ fontSize: 21, margin: "28px 0 16px" }}>
+              02. Select model size
             </h2>
 
-            <div className="grid grid-cols-2 gap-4">
-              <label className="text-sm font-medium">
-                Length (inches)
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                gap: 14,
+              }}
+            >
+              <div>
+                <label style={label}>Length (inches)</label>
                 <input
-                  className={`${inputClass} mt-2`}
                   type="number"
-                  min="4"
-                  max="48"
+                  min={4}
+                  max={48}
                   value={length}
                   onChange={(e) =>
-                    setLength(Math.min(48, Math.max(4, Number(e.target.value) || 4)))
+                    setLength(
+                      Math.min(48, Math.max(4, Number(e.target.value) || 4))
+                    )
                   }
+                  style={input}
                 />
-              </label>
-
-              <label className="text-sm font-medium">
-                Width (inches)
+              </div>
+              <div>
+                <label style={label}>Width (inches)</label>
                 <input
-                  className={`${inputClass} mt-2`}
                   type="number"
-                  min="4"
-                  max="48"
+                  min={4}
+                  max={48}
                   value={width}
                   onChange={(e) =>
-                    setWidth(Math.min(48, Math.max(4, Number(e.target.value) || 4)))
+                    setWidth(
+                      Math.min(48, Math.max(4, Number(e.target.value) || 4))
+                    )
                   }
+                  style={input}
                 />
-              </label>
+              </div>
             </div>
 
-            <p className="mt-3 text-sm text-gray-500">
-              Base area: {area} sq. in.
-            </p>
+            <div
+              style={{
+                marginTop: 14,
+                padding: 13,
+                borderRadius: 9,
+                background: "#f1f4ee",
+                fontSize: 14,
+              }}
+            >
+              Model base area: <strong>{area} sq. in.</strong>
+            </div>
 
-            <h2 className="mb-3 mt-6 text-xl font-semibold">
-              3. Detailing level
+            <h2 style={{ fontSize: 21, margin: "28px 0 16px" }}>
+              03. Detailing level
             </h2>
 
-            <div className="space-y-3">
+            <div style={{ display: "grid", gap: 10 }}>
               {[
-                ["Basic", "₹90 / sq. in."],
-                ["Detailed", "₹160 / sq. in."],
-                ["Premium", "₹260 / sq. in."],
-              ].map(([name, price]) => (
+                ["Basic", "Simple structure", "₹90 / sq. in."],
+                ["Detailed", "Architectural details", "₹160 / sq. in."],
+                ["Premium", "Intricate detailing", "₹260 / sq. in."],
+              ].map(([name, desc, price]) => (
                 <label
                   key={name}
-                  className="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 p-3"
+                  style={{
+                    ...option,
+                    background: detail === name ? "#f0f7f1" : "#fff",
+                    borderColor:
+                      detail === name ? "#80b797" : colors.border,
+                  }}
                 >
                   <input
                     type="radio"
                     name="detail"
                     checked={detail === name}
                     onChange={() => setDetail(name)}
+                    style={{
+                      accentColor: colors.green,
+                      width: 17,
+                      height: 17,
+                      flexShrink: 0,
+                    }}
                   />
-                  <span className="flex-1 font-medium">{name}</span>
-                  <span className="text-sm text-gray-500">{price}</span>
+                  <span style={{ flex: 1 }}>
+                    <strong style={{ display: "block" }}>{name}</strong>
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: 13,
+                        color: colors.muted,
+                        marginTop: 4,
+                      }}
+                    >
+                      {desc}
+                    </span>
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 12,
+                      color: colors.green,
+                      fontWeight: 600,
+                      textAlign: "right",
+                    }}
+                  >
+                    {price}
+                  </span>
                 </label>
               ))}
             </div>
           </section>
 
-          <section className={cardClass}>
-            <h2 className="mb-5 text-xl font-semibold">
-              4. Customize your model
+          <section style={card}>
+            <h2 style={{ fontSize: 21, margin: "0 0 8px" }}>
+              04. Customize your model
             </h2>
+            <p
+              style={{
+                margin: "0 0 20px",
+                fontSize: 14,
+                lineHeight: 1.7,
+                color: colors.muted,
+              }}
+            >
+              Select the features you want to include.
+            </p>
 
-            <div className="space-y-4">
-              {[
-                {
-                  label: "LED lighting",
-                  description: "Interior / exterior lights",
-                  value: lighting,
-                  set: setLighting,
-                  price: "₹800",
-                },
-                {
-                  label: "Landscaping",
-                  description: "Garden, lawn and miniature trees",
-                  value: landscape,
-                  set: setLandscape,
-                  price: "₹500 minimum",
-                },
-                {
-                  label: "Acrylic display box",
-                  description: "Protective transparent cover",
-                  value: acrylic,
-                  set: setAcrylic,
-                  price: "₹700 minimum",
-                },
-                {
-                  label: "Paint & finishing",
-                  description: "Surface finishing and detailing",
-                  value: paint,
-                  set: setPaint,
-                  price: "₹500",
-                },
-                {
-                  label: "Custom design",
-                  description: "Design from your drawings or photos",
-                  value: custom,
-                  set: setCustom,
-                  price: "₹1,500 extra",
-                },
-              ].map((item) => (
-                <label
-                  key={item.label}
-                  className="flex cursor-pointer items-start gap-3 rounded-xl border border-gray-200 p-4"
-                >
-                  <input
-                    className="mt-1 h-4 w-4"
-                    type="checkbox"
-                    checked={item.value}
-                    onChange={(e) => item.set(e.target.checked)}
-                  />
-                  <span className="flex-1">
-                    <span className="block font-medium">{item.label}</span>
-                    <span className="mt-1 block text-sm text-gray-500">
-                      {item.description}
-                    </span>
-                  </span>
-                  <span className="text-right text-sm font-medium">
-                    {item.price}
-                  </span>
-                </label>
-              ))}
+            <div style={{ display: "grid", gap: 12 }}>
+              {checkOption(
+                "LED lighting",
+                "Interior and exterior illumination",
+                "+ ₹800",
+                lighting,
+                setLighting
+              )}
+              {checkOption(
+                "Landscaping",
+                "Garden, lawn, paths and miniature trees",
+                "₹500+",
+                landscape,
+                setLandscape
+              )}
+              {checkOption(
+                "Acrylic display box",
+                "Transparent protective display cover",
+                "₹700+",
+                acrylic,
+                setAcrylic
+              )}
+              {checkOption(
+                "Paint & finishing",
+                "Paintwork and surface detailing",
+                "+ ₹500",
+                paint,
+                setPaint
+              )}
+              {checkOption(
+                "Custom design",
+                "Work from your drawings, plans or photos",
+                "+ ₹1,500",
+                custom,
+                setCustom
+              )}
             </div>
 
-            <div className="mt-6 rounded-xl bg-gray-100 p-5">
-              <p className="text-sm text-gray-600">
-                Estimated total price
-              </p>
-              <p className="mt-1 text-3xl font-bold">
-                {money(total)}
+            <div
+              style={{
+                background: colors.ink,
+                color: "#fff",
+                borderRadius: 15,
+                padding: 23,
+                marginTop: 24,
+              }}
+            >
+              <p
+                style={{
+                  fontSize: 13,
+                  margin: "0 0 8px",
+                  color: "#d5e4da",
+                }}
+              >
+                YOUR ESTIMATED PRICE
               </p>
 
-              <div className="mt-4 space-y-2 border-t border-gray-300 pt-3 text-sm">
-                <div className="flex justify-between gap-3">
-                  <span>Model ({detail})</span>
-                  <span>{money(Math.round(base))}</span>
-                </div>
-                <div className="flex justify-between gap-3">
-                  <span>Selected extras</span>
-                  <span>{money(extras)}</span>
-                </div>
+              <div
+                style={{
+                  fontSize: "clamp(32px, 4vw, 42px)",
+                  fontWeight: 750,
+                  letterSpacing: -1,
+                  overflowWrap: "anywhere",
+                }}
+              >
+                {money(total)}
               </div>
 
-              <p className="mt-4 text-xs leading-5 text-gray-500">
-                This is an indicative estimate. Final pricing depends
-                on design complexity, materials, printing time,
-                finishing and delivery.
+              <p
+                style={{
+                  fontSize: 12,
+                  color: "#d5e4da",
+                  lineHeight: 1.7,
+                  margin: "10px 0 20px",
+                }}
+              >
+                Estimate based on your selected size and features.
               </p>
+
+              <div
+                style={{
+                  borderTop: "1px solid #53675f",
+                  paddingTop: 15,
+                  display: "grid",
+                  gap: 12,
+                  fontSize: 14,
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: 10,
+                  }}
+                >
+                  <span>Base model ({detail})</span>
+                  <strong>{money(base)}</strong>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: 10,
+                  }}
+                >
+                  <span>Selected extras</span>
+                  <strong>{money(extras)}</strong>
+                </div>
+              </div>
 
               <button
                 type="button"
                 onClick={requestQuote}
-                className="mt-5 w-full rounded-xl bg-black px-5 py-3 font-semibold text-white transition hover:bg-gray-800"
+                style={{
+                  width: "100%",
+                  padding: "15px 12px",
+                  border: "none",
+                  borderRadius: 10,
+                  background: "#d8ebd9",
+                  color: colors.ink,
+                  fontSize: 15,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  marginTop: 23,
+                }}
               >
-                Get Final Quote on WhatsApp
+                Get Final Quote on WhatsApp ↗
               </button>
+
+              <p
+                style={{
+                  fontSize: 11,
+                  lineHeight: 1.7,
+                  color: "#d5e4da",
+                  margin: "14px 0 0",
+                }}
+              >
+                Indicative estimate only. Final pricing may vary
+                with design complexity, materials, fabrication and
+                delivery. Confirm the final quote before ordering.
+              </p>
             </div>
           </section>
         </div>
+
+        <footer
+          style={{
+            textAlign: "center",
+            color: colors.muted,
+            fontSize: 12,
+            marginTop: 28,
+            lineHeight: 1.8,
+          }}
+        >
+          CHHOTAKAAR · Thoughtfully crafted architectural miniatures
+        </footer>
       </div>
+
+      <style>{`
+        * {
+          box-sizing: border-box;
+        }
+
+        .calculator-grid {
+          width: 100%;
+        }
+
+        @media (max-width: 700px) {
+          .calculator-grid {
+            grid-template-columns: minmax(0, 1fr) !important;
+          }
+        }
+
+        select:focus, input:focus-visible, button:focus-visible {
+          outline: 2px solid #80b797;
+          outline-offset: 2px;
+        }
+      `}</style>
     </main>
   );
 }
