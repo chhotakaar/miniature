@@ -77,7 +77,7 @@ export default function CalculatePricePage() {
   ].join("\n");
 
   const whatsappUrl =
-    "https://wa.me/91XXXXXXXXXX?text=" +
+    "https://wa.me/918796289333?text=" +
     encodeURIComponent(whatsappMessage);
 
   async function handleGetQuote() {
