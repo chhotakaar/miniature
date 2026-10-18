@@ -3,12 +3,13 @@
 
 import { useState } from "react";
 
-const colors = {
-  ink: "#18352d",
-  green: "#246b50",
-  cream: "#f8f7f2",
-  border: "#e6e8e2",
-  muted: "#68736d",
+const C = {
+  green: "#245b45",
+  dark: "#19382d",
+  cream: "#f7f7f2",
+  border: "#e4e8e1",
+  muted: "#69756e",
+  pale: "#edf5ed",
 };
 
 const rates: Record<string, number> = {
@@ -38,56 +39,119 @@ export default function CalculatePricePage() {
     (paint ? 500 : 0) +
     (custom ? 1500 : 0);
 
-  const total = base + extras;
+  const total = Math.round(base + extras);
 
   const money = (n: number) =>
     "₹" + Math.round(n).toLocaleString("en-IN");
 
   const card: React.CSSProperties = {
     background: "#fff",
-    border: `1px solid ${colors.border}`,
-    borderRadius: 18,
-    padding: 24,
+    border: `1px solid ${C.border}`,
+    borderRadius: 15,
+    padding: 18,
     minWidth: 0,
+    boxSizing: "border-box",
+    boxShadow: "0 3px 14px rgba(25,56,45,0.035)",
+  };
+
+  const field: React.CSSProperties = {
+    width: "100%",
+    padding: "10px 11px",
+    border: `1px solid ${C.border}`,
+    borderRadius: 8,
+    background: "#fff",
+    color: C.dark,
+    fontSize: 14,
     boxSizing: "border-box",
   };
 
   const label: React.CSSProperties = {
     display: "block",
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: 600,
-    marginBottom: 8,
-    color: colors.ink,
+    marginBottom: 6,
+    color: C.dark,
   };
 
-  const input: React.CSSProperties = {
-    width: "100%",
-    padding: "12px 13px",
-    border: `1px solid ${colors.border}`,
-    borderRadius: 9,
-    background: "#fff",
-    color: colors.ink,
-    fontSize: 15,
-    boxSizing: "border-box",
-  };
-
-  const option: React.CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    gap: 12,
-    padding: 14,
-    border: `1px solid ${colors.border}`,
-    borderRadius: 12,
-    cursor: "pointer",
-    background: "#fff",
-    minWidth: 0,
-  };
+  function option(
+    title: string,
+    description: string,
+    price: string,
+    checked: boolean,
+    onChange: (value: boolean) => void
+  ) {
+    return (
+      <label
+        key={title}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          padding: "10px 11px",
+          border: `1px solid ${
+            checked ? "#b4d0b9" : C.border
+          }`,
+          borderRadius: 10,
+          background: checked ? "#f2f8f1" : "#fff",
+          cursor: "pointer",
+          minWidth: 0,
+        }}
+      >
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+          style={{
+            width: 16,
+            height: 16,
+            accentColor: C.green,
+            flexShrink: 0,
+            margin: 0,
+          }}
+        />
+        <span style={{ flex: 1, minWidth: 0 }}>
+          <span
+            style={{
+              display: "block",
+              fontSize: 13,
+              fontWeight: 650,
+              color: C.dark,
+            }}
+          >
+            {title}
+          </span>
+          <span
+            style={{
+              display: "block",
+              fontSize: 11,
+              color: C.muted,
+              lineHeight: 1.5,
+              marginTop: 2,
+            }}
+          >
+            {description}
+          </span>
+        </span>
+        <span
+          style={{
+            fontSize: 12,
+            fontWeight: 650,
+            color: C.green,
+            whiteSpace: "nowrap",
+          }}
+        >
+          {price}
+        </span>
+      </label>
+    );
+  }
 
   function requestQuote() {
+    // Replace with your WhatsApp number, including country code.
     const number = "91XXXXXXXXXX";
 
     if (number.includes("X")) {
-      alert("Please add your WhatsApp business number in the code.");
+      alert("Please add your WhatsApp number in the code first.");
       return;
     }
 
@@ -103,107 +167,62 @@ export default function CalculatePricePage() {
       `Paint finishing: ${paint ? "Yes" : "No"}`,
       `Custom design: ${custom ? "Yes" : "No"}`,
       `Estimated price: ${money(total)}`,
-      "Please confirm final pricing and delivery time.",
+      "Please confirm the final price and delivery time.",
     ].join("\n");
 
     window.open(
       `https://wa.me/${number}?text=${encodeURIComponent(message)}`,
-      "_blank"
+      "_blank",
+      "noopener,noreferrer"
     );
   }
 
-  function checkOption(
-    title: string,
-    description: string,
-    price: string,
-    checked: boolean,
-    onChange: (value: boolean) => void
-  ) {
-    return (
-      <label
-        key={title}
-        style={{
-          ...option,
-          alignItems: "flex-start",
-          background: checked ? "#f0f7f1" : "#fff",
-          borderColor: checked ? "#a9cdb4" : colors.border,
-        }}
-      >
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={(e) => onChange(e.target.checked)}
-          style={{
-            width: 18,
-            height: 18,
-            accentColor: colors.green,
-            flexShrink: 0,
-            marginTop: 3,
-          }}
-        />
-        <span style={{ flex: 1, minWidth: 0 }}>
-          <span style={{ display: "block", fontWeight: 600 }}>
-            {title}
-          </span>
-          <span
-            style={{
-              display: "block",
-              fontSize: 13,
-              color: colors.muted,
-              marginTop: 4,
-              lineHeight: 1.5,
-            }}
-          >
-            {description}
-          </span>
-        </span>
-        <span
-          style={{
-            fontSize: 13,
-            fontWeight: 600,
-            whiteSpace: "nowrap",
-            color: colors.green,
-          }}
-        >
-          {price}
-        </span>
-      </label>
-    );
-  }
+  const heading: React.CSSProperties = {
+    fontSize: 17,
+    fontWeight: 700,
+    color: C.dark,
+    margin: "0 0 13px",
+  };
 
   return (
     <main
       style={{
-        background: colors.cream,
         minHeight: "100vh",
-        padding: "44px 18px 70px",
-        color: colors.ink,
+        background: C.cream,
+        color: C.dark,
         fontFamily: "Arial, Helvetica, sans-serif",
+        padding: "24px 14px 36px",
         boxSizing: "border-box",
       }}
     >
-      <div style={{ maxWidth: 1080, margin: "0 auto" }}>
-        <header style={{ textAlign: "center", marginBottom: 36 }}>
+      <div style={{ maxWidth: 1020, margin: "0 auto" }}>
+        {/* Header */}
+        <header style={{ textAlign: "center", marginBottom: 22 }}>
           <div
             style={{
-              fontSize: 12,
-              letterSpacing: 3,
+              display: "inline-block",
+              padding: "6px 11px",
+              border: `1px solid ${C.border}`,
+              borderRadius: 30,
+              background: "#fff",
+              color: C.green,
+              fontSize: 10,
               fontWeight: 700,
-              color: colors.green,
-              marginBottom: 14,
+              letterSpacing: 1.8,
+              marginBottom: 10,
             }}
           >
-            CHHOTAKAAR · CUSTOM ARCHITECTURAL MODELS
+            CHHOTAKAAR · CUSTOM MODELS
           </div>
 
           <h1
             style={{
-              fontSize: "clamp(32px, 5vw, 50px)",
-              letterSpacing: -1.5,
-              lineHeight: 1.12,
-              margin: "0 0 15px",
+              fontSize: "clamp(27px, 3.5vw, 40px)",
+              letterSpacing: -1.2,
+              lineHeight: 1.15,
+              margin: "0 0 8px",
               fontWeight: 750,
-              color: colors.ink,
+              color: C.dark,
             }}
           >
             Build Your Own Miniature
@@ -211,37 +230,37 @@ export default function CalculatePricePage() {
 
           <p
             style={{
-              maxWidth: 570,
+              maxWidth: 520,
               margin: "0 auto",
-              lineHeight: 1.8,
-              color: colors.muted,
-              fontSize: 16,
+              color: C.muted,
+              fontSize: 13,
+              lineHeight: 1.7,
             }}
           >
-            Create your dream miniature. Choose the size,
-            detailing and finishing to estimate your price.
+            Personalize your model, select your features and
+            calculate your estimated price instantly.
           </p>
         </header>
 
+        {/* Calculator columns */}
         <div
           className="calculator-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-            gap: 22,
+            gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
+            gap: 16,
             alignItems: "start",
           }}
         >
+          {/* Left card */}
           <section style={card}>
-            <h2 style={{ fontSize: 21, margin: "0 0 22px" }}>
-              01. Choose your model
-            </h2>
+            <h2 style={heading}>01. Choose your model</h2>
 
             <label style={label}>Model type</label>
             <select
               value={model}
               onChange={(e) => setModel(e.target.value)}
-              style={input}
+              style={field}
             >
               <option>House</option>
               <option>Villa</option>
@@ -249,15 +268,15 @@ export default function CalculatePricePage() {
               <option>Commercial Building</option>
             </select>
 
-            <h2 style={{ fontSize: 21, margin: "28px 0 16px" }}>
-              02. Select model size
+            <h2 style={{ ...heading, marginTop: 22 }}>
+              02. Model size
             </h2>
 
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-                gap: 14,
+                gridTemplateColumns: "1fr 1fr",
+                gap: 12,
               }}
             >
               <div>
@@ -272,7 +291,7 @@ export default function CalculatePricePage() {
                       Math.min(48, Math.max(4, Number(e.target.value) || 4))
                     )
                   }
-                  style={input}
+                  style={field}
                 />
               </div>
               <div>
@@ -287,203 +306,228 @@ export default function CalculatePricePage() {
                       Math.min(48, Math.max(4, Number(e.target.value) || 4))
                     )
                   }
-                  style={input}
+                  style={field}
                 />
               </div>
             </div>
 
             <div
               style={{
-                marginTop: 14,
-                padding: 13,
-                borderRadius: 9,
-                background: "#f1f4ee",
-                fontSize: 14,
+                marginTop: 10,
+                background: C.pale,
+                borderRadius: 8,
+                padding: "10px 12px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 8,
+                fontSize: 12,
               }}
             >
-              Model base area: <strong>{area} sq. in.</strong>
+              <span style={{ color: C.muted }}>Base area</span>
+              <strong>{area} sq. in.</strong>
             </div>
 
-            <h2 style={{ fontSize: 21, margin: "28px 0 16px" }}>
+            <h2 style={{ ...heading, marginTop: 22 }}>
               03. Detailing level
             </h2>
 
-            <div style={{ display: "grid", gap: 10 }}>
+            <div style={{ display: "grid", gap: 8 }}>
               {[
-                ["Basic", "Simple structure", "₹90 / sq. in."],
-                ["Detailed", "Architectural details", "₹160 / sq. in."],
-                ["Premium", "Intricate detailing", "₹260 / sq. in."],
-              ].map(([name, desc, price]) => (
+                {
+                  name: "Basic",
+                  desc: "Simple architectural structure",
+                  price: "₹90 / sq. in.",
+                },
+                {
+                  name: "Detailed",
+                  desc: "Enhanced architectural details",
+                  price: "₹160 / sq. in.",
+                },
+                {
+                  name: "Premium",
+                  desc: "Intricate detailing",
+                  price: "₹260 / sq. in.",
+                },
+              ].map((item) => (
                 <label
-                  key={name}
+                  key={item.name}
                   style={{
-                    ...option,
-                    background: detail === name ? "#f0f7f1" : "#fff",
-                    borderColor:
-                      detail === name ? "#80b797" : colors.border,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 9,
+                    padding: "10px 11px",
+                    borderRadius: 10,
+                    border: `1px solid ${
+                      detail === item.name ? "#a8c8ae" : C.border
+                    }`,
+                    background:
+                      detail === item.name ? "#f1f7ef" : "#fff",
+                    cursor: "pointer",
                   }}
                 >
                   <input
                     type="radio"
                     name="detail"
-                    checked={detail === name}
-                    onChange={() => setDetail(name)}
+                    checked={detail === item.name}
+                    onChange={() => setDetail(item.name)}
                     style={{
-                      accentColor: colors.green,
-                      width: 17,
-                      height: 17,
+                      accentColor: C.green,
+                      width: 15,
+                      height: 15,
+                      margin: 0,
                       flexShrink: 0,
                     }}
                   />
-                  <span style={{ flex: 1 }}>
-                    <strong style={{ display: "block" }}>{name}</strong>
+                  <span style={{ flex: 1, minWidth: 0 }}>
+                    <strong style={{ fontSize: 13, display: "block" }}>
+                      {item.name}
+                    </strong>
                     <span
                       style={{
+                        fontSize: 11,
                         display: "block",
-                        fontSize: 13,
-                        color: colors.muted,
-                        marginTop: 4,
+                        color: C.muted,
+                        marginTop: 3,
                       }}
                     >
-                      {desc}
+                      {item.desc}
                     </span>
                   </span>
                   <span
                     style={{
-                      fontSize: 12,
-                      color: colors.green,
-                      fontWeight: 600,
-                      textAlign: "right",
+                      color: C.green,
+                      fontSize: 11,
+                      fontWeight: 700,
+                      whiteSpace: "nowrap",
                     }}
                   >
-                    {price}
+                    {item.price}
                   </span>
                 </label>
               ))}
             </div>
           </section>
 
+          {/* Right card */}
           <section style={card}>
-            <h2 style={{ fontSize: 21, margin: "0 0 8px" }}>
-              04. Customize your model
-            </h2>
+            <h2 style={heading}>04. Customize your model</h2>
             <p
               style={{
-                margin: "0 0 20px",
-                fontSize: 14,
-                lineHeight: 1.7,
-                color: colors.muted,
+                color: C.muted,
+                fontSize: 12,
+                lineHeight: 1.6,
+                margin: "-5px 0 13px",
               }}
             >
-              Select the features you want to include.
+              Add the features that bring your miniature to life.
             </p>
 
-            <div style={{ display: "grid", gap: 12 }}>
-              {checkOption(
+            <div style={{ display: "grid", gap: 8 }}>
+              {option(
                 "LED lighting",
                 "Interior and exterior illumination",
                 "+ ₹800",
                 lighting,
                 setLighting
               )}
-              {checkOption(
+              {option(
                 "Landscaping",
-                "Garden, lawn, paths and miniature trees",
+                "Garden, lawn and miniature trees",
                 "₹500+",
                 landscape,
                 setLandscape
               )}
-              {checkOption(
+              {option(
                 "Acrylic display box",
-                "Transparent protective display cover",
+                "Transparent protective cover",
                 "₹700+",
                 acrylic,
                 setAcrylic
               )}
-              {checkOption(
+              {option(
                 "Paint & finishing",
-                "Paintwork and surface detailing",
+                "Surface finish and detailing",
                 "+ ₹500",
                 paint,
                 setPaint
               )}
-              {checkOption(
+              {option(
                 "Custom design",
-                "Work from your drawings, plans or photos",
+                "Based on your plans or photos",
                 "+ ₹1,500",
                 custom,
                 setCustom
               )}
             </div>
 
+            {/* Price summary */}
             <div
               style={{
-                background: colors.ink,
+                marginTop: 16,
+                borderRadius: 13,
+                background: C.dark,
+                padding: 18,
                 color: "#fff",
-                borderRadius: 15,
-                padding: 23,
-                marginTop: 24,
               }}
             >
               <p
                 style={{
-                  fontSize: 13,
-                  margin: "0 0 8px",
-                  color: "#d5e4da",
+                  margin: "0 0 5px",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: 1.4,
+                  color: "#d2e2d6",
                 }}
               >
                 YOUR ESTIMATED PRICE
               </p>
 
               <div
+                aria-live="polite"
                 style={{
-                  fontSize: "clamp(32px, 4vw, 42px)",
+                  fontSize: "clamp(29px, 3.5vw, 38px)",
                   fontWeight: 750,
-                  letterSpacing: -1,
+                  letterSpacing: -0.8,
+                  lineHeight: 1.25,
                   overflowWrap: "anywhere",
                 }}
               >
                 {money(total)}
               </div>
 
-              <p
-                style={{
-                  fontSize: 12,
-                  color: "#d5e4da",
-                  lineHeight: 1.7,
-                  margin: "10px 0 20px",
-                }}
-              >
-                Estimate based on your selected size and features.
-              </p>
-
               <div
                 style={{
-                  borderTop: "1px solid #53675f",
-                  paddingTop: 15,
                   display: "grid",
-                  gap: 12,
-                  fontSize: 14,
+                  gap: 9,
+                  borderTop: "1px solid #52685c",
+                  paddingTop: 13,
+                  marginTop: 14,
+                  fontSize: 12,
                 }}
               >
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    gap: 10,
+                    gap: 8,
                   }}
                 >
-                  <span>Base model ({detail})</span>
+                  <span style={{ color: "#d2e2d6" }}>
+                    Base model · {detail}
+                  </span>
                   <strong>{money(base)}</strong>
                 </div>
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    gap: 10,
+                    gap: 8,
                   }}
                 >
-                  <span>Selected extras</span>
+                  <span style={{ color: "#d2e2d6" }}>
+                    Selected extras
+                  </span>
                   <strong>{money(extras)}</strong>
                 </div>
               </div>
@@ -493,15 +537,15 @@ export default function CalculatePricePage() {
                 onClick={requestQuote}
                 style={{
                   width: "100%",
-                  padding: "15px 12px",
+                  marginTop: 17,
+                  padding: "12px 10px",
                   border: "none",
-                  borderRadius: 10,
-                  background: "#d8ebd9",
-                  color: colors.ink,
-                  fontSize: 15,
-                  fontWeight: 700,
+                  borderRadius: 9,
+                  background: "#dcebd9",
+                  color: C.dark,
+                  fontSize: 13,
+                  fontWeight: 750,
                   cursor: "pointer",
-                  marginTop: 23,
                 }}
               >
                 Get Final Quote on WhatsApp ↗
@@ -509,15 +553,14 @@ export default function CalculatePricePage() {
 
               <p
                 style={{
-                  fontSize: 11,
-                  lineHeight: 1.7,
-                  color: "#d5e4da",
-                  margin: "14px 0 0",
+                  margin: "11px 0 0",
+                  fontSize: 10,
+                  lineHeight: 1.65,
+                  color: "#d2e2d6",
                 }}
               >
-                Indicative estimate only. Final pricing may vary
-                with design complexity, materials, fabrication and
-                delivery. Confirm the final quote before ordering.
+                Indicative estimate only. Final pricing depends
+                on model complexity, materials, finishing and delivery.
               </p>
             </div>
           </section>
@@ -526,34 +569,40 @@ export default function CalculatePricePage() {
         <footer
           style={{
             textAlign: "center",
-            color: colors.muted,
-            fontSize: 12,
-            marginTop: 28,
-            lineHeight: 1.8,
+            marginTop: 20,
+            color: C.muted,
+            fontSize: 10,
+            letterSpacing: 0.6,
           }}
         >
-          CHHOTAKAAR · Thoughtfully crafted architectural miniatures
+          CHHOTAKAAR · THOUGHTFULLY CRAFTED MINIATURES
         </footer>
       </div>
 
       <style>{`
-        * {
+        .calculator-grid {
+          width: 100%;
+        }
+
+        .calculator-grid * {
           box-sizing: border-box;
         }
 
-        .calculator-grid {
-          width: 100%;
+        .calculator-grid input:focus-visible,
+        .calculator-grid select:focus-visible,
+        .calculator-grid button:focus-visible {
+          outline: 2px solid #82b596;
+          outline-offset: 2px;
+        }
+
+        .calculator-grid button:hover {
+          filter: brightness(0.96);
         }
 
         @media (max-width: 700px) {
           .calculator-grid {
             grid-template-columns: minmax(0, 1fr) !important;
           }
-        }
-
-        select:focus, input:focus-visible, button:focus-visible {
-          outline: 2px solid #80b797;
-          outline-offset: 2px;
         }
       `}</style>
     </main>
