@@ -380,7 +380,7 @@ export default function CalculatePricePage() {
                 />
                 <Option
                   title="No, create it for me"
-                  description="Design charge +₹1,000"
+                  description="Design charge +₹2,000"
                   selected={has3DFile === "no"}
                   onClick={() => setHas3DFile("no")}
                 />
