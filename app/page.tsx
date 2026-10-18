@@ -182,7 +182,7 @@ export default function Home() {
         <a href="#models" onClick={() => setMenuOpen(false)}>Models</a>
         <a href="#customize-model" onClick={(e) => { e.preventDefault(); scrollToCustomize(); }}>Customize Your Model</a>
         <a href="#process" onClick={() => setMenuOpen(false)}>How it works</a>
-        <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+        <a href="/about" onClick={() => setMenuOpen(false)}>About</a>
         <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
       </nav>
       <div className="header-actions">
