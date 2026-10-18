@@ -23,28 +23,28 @@ export default function AboutPage() {
   return (
     <main className="about-page">
       <style jsx>{`
-        .about-page{--green:#0b3028;--green2:#123f34;--cream:#f8f6f0;--gold:#d2a04f;--muted:#77776e;--line:#e7e0d4;background:var(--cream);color:var(--green);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
-        *{box-sizing:border-box}.container{width:min(1180px,92%);margin:0 auto}
+        .about-page{--green:#0b3028;--green2:#123f34;--cream:#f8f6f0;--gold:#d2a04f;--muted:#77776e;--line:#e7e0d4;background:var(--cream);color:var(--green);font-family:Arial,Helvetica,sans-serif;min-height:100vh;width:100%;overflow-x:hidden;line-height:1.5}
+        .about-page *{box-sizing:border-box;min-width:0}.container{width: min(1180px, calc(100% - 40px));margin-inline:auto}
         .hero{padding:72px 0 62px}.eyebrow{color:#bd873c;font-size:10px;font-weight:700;letter-spacing:2.3px;text-transform:uppercase;margin:0 0 14px}
         h1{font-size:clamp(38px,6vw,72px);letter-spacing:-2.6px;line-height:1.02;margin:0;max-width:820px}h1 span,.gold{color:var(--gold)}
-        .hero-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:48px;align-items:end}.lead{color:var(--muted);font-size:16px;line-height:1.9;max-width:680px;margin:24px 0 0}
+        .hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:clamp(24px,4vw,48px);align-items:end}.lead{color:var(--muted);font-size:16px;line-height:1.9;max-width:680px;margin:24px 0 0}
         .hero-card{background:#fffefa;border:1px solid var(--line);border-radius:18px;padding:24px}.hero-card strong{display:block;font-size:17px;margin-bottom:8px}.hero-card p{color:var(--muted);font-size:13px;line-height:1.8;margin:0}
         .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.button{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:13px 20px;font-size:12px;font-weight:700;text-decoration:none;border:1px solid var(--green);cursor:pointer;transition:transform .2s,background .2s}.button:hover{transform:translateY(-2px)}
         .primary{background:var(--green);color:white}.primary:hover{background:var(--green2)}.secondary{color:var(--green);background:transparent}
         .section{padding:62px 0;border-top:1px solid var(--line)}.section-heading{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:28px}
         h2{font-size:clamp(28px,4vw,44px);letter-spacing:-1.3px;line-height:1.12;margin:0}.section-intro{max-width:420px;color:var(--muted);font-size:13px;line-height:1.8;margin:0}
-        .values{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.value-card{border:1px solid var(--line);background:#fffefa;padding:24px;border-radius:16px;min-height:190px}
+        .values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.value-card{border:1px solid var(--line);background:#fffefa;padding:24px;border-radius:16px;min-height:190px}
         .icon{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--gold);border-radius:50%;color:#b67f31;font-size:18px;margin-bottom:20px}
         h3{font-size:18px;margin:0 0 10px;letter-spacing:-.3px}.value-card p{color:var(--muted);font-size:13px;line-height:1.8;margin:0}
-        .process{display:grid;grid-template-columns:.8fr 1.2fr;gap:50px;align-items:start}.step-list{display:grid;gap:10px}
+        .process{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,4vw,50px);align-items:start}.step-list{display:grid;gap:10px}
         .step-button{display:flex;gap:16px;text-align:left;align-items:center;width:100%;padding:17px;border-radius:13px;background:transparent;border:1px solid var(--line);color:var(--green);cursor:pointer}.step-button.active{background:#fffefa;border-color:var(--gold)}
         .step-number{color:#bd873c;font-size:11px;font-weight:700;letter-spacing:1px}.step-button strong{font-size:14px}
         .step-detail{background:var(--green);color:white;border-radius:18px;padding:32px;min-height:250px;margin-top:14px}.step-detail .step-number{color:#f4c765}.step-detail h3{font-size:27px;margin:18px 0 12px}.step-detail p{color:#e1e9e4;font-size:14px;line-height:1.9;margin:0}
-        .faq-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:48px}.faq-list{display:grid;gap:10px}.faq-item{border:1px solid var(--line);border-radius:13px;background:#fffefa;overflow:hidden}
+        .faq-grid{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(24px,4vw,48px)}.faq-list{display:grid;gap:10px}.faq-item{border:1px solid var(--line);border-radius:13px;background:#fffefa;overflow:hidden}
         .faq-question{width:100%;display:flex;justify-content:space-between;gap:16px;text-align:left;border:0;padding:18px;background:transparent;color:var(--green);cursor:pointer;font-size:13px;font-weight:700}.faq-answer{color:var(--muted);font-size:13px;line-height:1.85;padding:0 18px 18px}
         .cta{background:var(--green);color:white;border-radius:20px;padding:clamp(28px,5vw,52px);display:flex;justify-content:space-between;align-items:center;gap:30px}.cta h2{max-width:650px}.cta p:not(.eyebrow){color:#dce7e1;font-size:13px;line-height:1.8;max-width:600px;margin:14px 0 0}.cta .button{background:#f7f4ec;color:var(--green);border-color:#f7f4ec;white-space:nowrap}
         .note{color:var(--muted);font-size:11px;line-height:1.8;margin-top:22px}
-        @media(max-width:760px){.hero{padding:48px 0 40px}.hero-grid,.process,.faq-grid{grid-template-columns:1fr;gap:24px}.section{padding:42px 0}.section-heading{align-items:start;flex-direction:column;gap:12px}.values{grid-template-columns:1fr}.cta{align-items:start;flex-direction:column}h1{letter-spacing:-1.5px}}
+        @media(max-width:760px){.hero{padding:48px 0 40px}.hero-grid,.process,.faq-grid{grid-template-columns:minmax(0,1fr);gap:24px}.section{padding:42px 0}.section-heading{align-items:start;flex-direction:column;gap:12px}.values{grid-template-columns:minmax(0,1fr)}.cta{align-items:start;flex-direction:column}.cta .button{white-space:normal}h1{letter-spacing:-1.5px;font-size:clamp(36px,10vw,56px)}.section-heading{width:100%}.lead{font-size:15px}}
       `}</style>
 
       <section className="hero">
